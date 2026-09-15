@@ -1,0 +1,151 @@
+/* --- VARIÁVEIS DE COR --- */
+:root {
+    --shelf-bg: #0d0d0d;
+    --shelf-border: #1a1a1a;
+    --shelf-divider: #252525;
+    --shelf-gradient-start: #050505;
+    --shelf-gradient-end: #161616;
+    --shelf-shadow-top: rgba(0,0,0,0.2);
+    --text-color: white;
+    --tooltip-bg: #000;
+    --tooltip-border: #444;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --text-color: #1a1a1a;
+        --tooltip-bg: #333;
+        --tooltip-border: #999;
+    }
+}
+
+/* --- ESTILO GERAL --- */
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: transparent !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    overflow-x: hidden;
+}
+
+/* O MÓVEL */
+.furniture-wrapper {
+    width: 95%;
+    max-width: 420px;
+    margin: 20px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* A PARTE DE CIMA (ESTANTE) */
+.bookshelf-container {
+    width: 100%;
+    background-color: var(--shelf-bg);
+    border: 15px solid var(--shelf-border);
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    box-shadow: 10px 10px 30px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.bookshelf-container::before {
+    content: '';
+    position: absolute;
+    top: -25px;
+    left: -15px;
+    right: -15px;
+    height: 25px;
+    background: var(--shelf-border);
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+/* AS PRATELEIRAS */
+.shelf-row {
+    height: 155px;
+    border-bottom: 12px solid var(--shelf-divider);
+    display: flex;
+    align-items: flex-end;
+    padding: 0 2px 0 0;
+    background: linear-gradient(to bottom, var(--shelf-gradient-start), var(--shelf-gradient-end));
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.shelf-row:last-of-type {
+    border-bottom: none !important;
+    background: transparent !important;
+}
+
+.shelf-row::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: var(--shelf-shadow-top);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.shelf-footer {
+    width: calc(100% + 2px);
+    height: 55px;
+    background: var(--shelf-border);
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.6);
+    position: relative;
+    margin-top: -1px;
+    z-index: 5;
+}
+
+/* O LIVRO */
+.book, a.book-link {
+    margin-right: 1px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 1px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.9);
+    transition: transform 0.2s;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    display: block;
+    text-decoration: none;
+}
+
+.book:hover, a.book-link:hover {
+    transform: translateY(-6px);
+    z-index: 10;
+    box-shadow: 0 0 15px rgba(255,255,255,0.15);
+}
+
+/* PREVIEW AMPLIADO (aparece ao passar o mouse) */
+#zoom-preview {
+    position: fixed;
+    z-index: 999;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    background: transparent;
+}
+
+#zoom-preview.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#zoom-img {
+    display: block;
+    max-height: 65vh;
+    max-width: 90vw;
+    filter: drop-shadow(0 10px 25px rgba(0,0,0,0.6));
+}
